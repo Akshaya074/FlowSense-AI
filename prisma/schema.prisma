@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  clerkId   String   @unique
+  token     String?  @unique // Hashed Personal Access Token (PAT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events    TelemetryEvent[]
+  summaries DailySummary[]
+}
+
+model TelemetryEvent {
+  id           String   @id @default(uuid())
+  userId       String
+  eventType    String   // "FILE_OPEN", "FILE_SAVE", "DOC_VISIT"
+  resourceName String   // File path or tab URL
+  workspace    String   // Workspace folder name or whitelisted site domain
+  timestamp    DateTime
+  metadata     Json     @default("{}")
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([timestamp])
+}
+
+model DailySummary {
+  id        String   @id @default(uuid())
+  userId    String
+  date      String   // Format: "YYYY-MM-DD"
+  content   String   // Markdown summary document
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}

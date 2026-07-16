@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// Define matches for routes requiring authentication guards
+// Define matches for routes requiring Clerk session auth guards
 const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
@@ -11,9 +11,11 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.[^?]*$).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
+    // Match all dashboard paths
+    "/dashboard(.*)",
+    // Match user/token endpoints (Clerk auth required)
+    "/api/user(.*)",
+    // Skip static files, Next.js internals, and specifically the /api/events telemetry endpoint
+    "/((?!_next|api/events|[^?]*\\.[^?]*$).*)",
   ],
 };

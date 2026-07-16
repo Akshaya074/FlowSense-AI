@@ -1,0 +1,45 @@
+{
+  "name": "flowsense-telemetry",
+  "displayName": "FlowSense AI Telemetry",
+  "description": "Companion extension for FlowSense AI to log workspace activity",
+  "version": "0.1.0",
+  "publisher": "flowsense",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "flowsense.setToken",
+        "title": "FlowSense: Set Personal Access Token"
+      }
+    ],
+    "configuration": {
+      "title": "FlowSense AI",
+      "properties": {
+        "flowsense.apiEndpoint": {
+          "type": "string",
+          "default": "http://localhost:3000/api/events",
+          "description": "The FlowSense AI ingestion API endpoint"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -2,8 +2,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code2, Search, Sparkles } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // 1. Check user authentication server-side using Clerk auth()
+  const { userId } = await auth();
+  const isSignedIn = !!userId;
+
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 font-sans">
       {/* Header */}
@@ -18,16 +24,29 @@ export default function LandingPage() {
             </span>
           </div>
           <nav className="flex items-center gap-4">
-            <Link href="/sign-in">
-              <Button variant="ghost" className="text-zinc-600 hover:text-zinc-900">
-                Sign In
-              </Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                Dashboard
-              </Button>
-            </Link>
+            {!isSignedIn ? (
+              <>
+                <Link href="/sign-in">
+                  <Button variant="ghost" className="text-zinc-600 hover:text-zinc-900 cursor-pointer">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button className="bg-blue-600 text-white hover:bg-blue-700 cursor-pointer">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/dashboard">
+                  <Button variant="ghost" className="text-zinc-600 hover:text-zinc-900 cursor-pointer">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+                <UserButton />
+              </>
+            )}
           </nav>
         </div>
       </header>
@@ -51,11 +70,19 @@ export default function LandingPage() {
               FlowSense AI automatically tracks your IDE saving actions and documentation web searches, compiling daily digests and enabling semantic RAG query search to recover your mental state in seconds.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Link href="/dashboard" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 text-base px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.01]">
-                  Get Started for Free
-                </Button>
-              </Link>
+              {!isSignedIn ? (
+                <Link href="/sign-in" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 text-base px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.01]">
+                    Get Started for Free
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/dashboard" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 text-base px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.01]">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              )}
               <Link href="/sign-in" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto text-zinc-700 border-zinc-300 hover:bg-zinc-100 text-base px-8 py-6 rounded-xl">
                   Watch Demo

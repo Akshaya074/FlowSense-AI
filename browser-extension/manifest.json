@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "FlowSense AI Browser Tracker",
+  "version": "0.1.0",
+  "description": "Companion Chrome extension to log developer visits to whitelisted documentation sites",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
