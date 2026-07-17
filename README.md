@@ -1,5 +1,7 @@
 # FlowSense AI 🚀
 
+Link = flow-sense-ai-self.vercel.app
+
 > **Intelligent Developer Activity Ingestion, Daily AI Focus Summaries, and Semantic Chat (RAG) System.**
 
 FlowSense AI is a developer productivity tracker that aggregates telemetry logs from VS Code saves/opens and Chrome documentation whitelisted views. It compiles raw developer logs into professional, structured **Daily Focus Summaries** using Google's Gemini models, indexes summaries into **Qdrant Vector Cloud**, and exposes a **Semantic Context Chatbot (RAG)** alongside a **Redis-cached Workspace Analytics Dashboard** to help developers review their work and recall context.
