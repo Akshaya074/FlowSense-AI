@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { getOrCreateUserAndSeed } from "@/lib/services/user";
 import db from "@/lib/db";
 
 // Helper to calculate developer session times from event timestamps
@@ -47,26 +48,20 @@ export async function GET(req) {
       });
     }
 
-    // 2. Fetch database user
-    const dbUser = await db.user.findUnique({
+    // 2. Fetch database user or create & seed default events
+    let dbUser = await db.user.findUnique({
       where: { clerkId: userId },
     });
 
     if (!dbUser) {
-      return new Response(
-        JSON.stringify({
-          codingTime: "0h 0m",
-          filesModifiedCount: 0,
-          docVisitsCount: 0,
-          recentEvents: [],
-          latestSummary: null,
-          totalEventsCount: 0,
-        }),
-        {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      try {
+        const clerkUser = await currentUser();
+        const email = clerkUser?.emailAddresses?.[0]?.emailAddress || "no-email@flowsense.ai";
+        dbUser = await getOrCreateUserAndSeed(userId, email);
+      } catch (clerkError) {
+        console.error("[FlowSense AI] Clerk user fetch failed in stats, running fallback seed:", clerkError);
+        dbUser = await getOrCreateUserAndSeed(userId, "fallback-user@flowsense.ai");
+      }
     }
 
     // 3. Define timezone boundary for "Today" (Using UTC for consistency in portfolio project)
