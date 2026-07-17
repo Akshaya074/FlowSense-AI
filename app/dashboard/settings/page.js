@@ -146,40 +146,111 @@ export default function SettingsPage() {
 
             <h3 className="text-sm font-bold text-zinc-900">Setup Instructions</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
-              {/* VS Code Setup */}
-              <div className="bg-zinc-50 p-5 rounded-xl border border-zinc-200 flex flex-col justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                    <Terminal className="h-4 w-4 text-blue-600" /> VS Code Integration
-                  </h4>
-                  <ol className="list-decimal list-inside text-xs text-zinc-650 space-y-2.5 leading-relaxed">
-                    <li>Copy your **Personal Access Token** generated above.</li>
-                    <li>Click the **VS Code Plugin (.zip)** button above to download the extension package.</li>
-                    <li>Extract/Unzip the downloaded folder on your computer.</li>
-                    <li>Move the extracted **`vscode-extension`** folder directly into your VS Code extensions directory (on Windows: <code className="bg-zinc-150 px-1 rounded text-[10px]">%USERPROFILE%\.vscode\extensions</code>; on macOS/Linux: <code className="bg-zinc-150 px-1 rounded text-[10px]">~/.vscode/extensions/</code>).</li>
-                    <li>Open or restart VS Code. Open settings (`Ctrl+,` or `Cmd+,`), search for **`FlowSense AI: Service URL`**, and set it to: <code className="bg-zinc-150 px-1 rounded text-[10px]">https://flow-sense-ai-self.vercel.app</code>.</li>
-                    <li>Open the Command Palette (<kbd className="bg-white border px-1 rounded text-[10px]">Ctrl+Shift+P</kbd> or <kbd className="bg-white border px-1 rounded text-[10px]">Cmd+Shift+P</kbd>), select **`FlowSense AI: Set Personal Access Token`**, and paste your token.</li>
-                  </ol>
+              {/* VS Code Setup Card */}
+              <div className="bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col">
+                <div className="bg-zinc-50 border-b border-zinc-100 p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="h-5 w-5 text-blue-600" />
+                    <span className="text-sm font-bold text-zinc-900">VS Code Integration</span>
+                  </div>
+                  <span className="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full select-none">IDE PLUGIN</span>
+                </div>
+                <div className="p-5 flex-1 space-y-4">
+                  
+                  {/* Step 1 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xs font-bold text-blue-600 border border-blue-100">1</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Download Extension Build</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Click the black button above to download the zip package, and unzip it on your computer.</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xs font-bold text-blue-600 border border-blue-100">2</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Install in VS Code Extensions Folder</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Move the extracted <code className="bg-zinc-100 px-1 rounded font-mono text-[10px] text-zinc-800">vscode-extension</code> folder directly to:</p>
+                      <div className="mt-1.5 space-y-1">
+                        <p className="text-[10px] text-zinc-650 flex items-center gap-1.5"><strong className="text-zinc-700">Windows:</strong> <code className="bg-zinc-150 px-1 rounded text-2xs font-mono text-zinc-650">%USERPROFILE%\.vscode\extensions</code></p>
+                        <p className="text-[10px] text-zinc-650 flex items-center gap-1.5"><strong className="text-zinc-700">macOS/Linux:</strong> <code className="bg-zinc-150 px-1 rounded text-2xs font-mono text-zinc-650">~/.vscode/extensions/</code></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xs font-bold text-blue-600 border border-blue-100">3</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Configure Service Endpoint URL</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Restart VS Code. Open Settings (<kbd className="border bg-zinc-50 px-1 rounded text-[10px]">Ctrl+,</kbd> or <kbd className="border bg-zinc-50 px-1 rounded text-[10px]">Cmd+,</kbd>), search for <strong className="text-zinc-850">FlowSense</strong>, and paste your backend endpoint in the box:</p>
+                      <code className="block w-full mt-1.5 p-2 bg-zinc-900 text-zinc-100 rounded-lg text-2xs font-mono select-all">https://flow-sense-ai-self.vercel.app/api/events</code>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xs font-bold text-blue-600 border border-blue-100">4</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Set Personal Access Token (PAT)</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Open the Command Palette (<kbd className="border bg-zinc-50 px-1 rounded text-[10px]">Ctrl+Shift+P</kbd>), select <strong className="text-zinc-850">FlowSense: Set Token</strong>, and paste the PAT you copied above.</p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
-              {/* Browser Setup */}
-              <div className="bg-zinc-50 p-5 rounded-xl border border-zinc-200 flex flex-col justify-between">
-                <div>
-                  <h4 className="text-xs font-bold text-zinc-950 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                    <Globe className="h-4 w-4 text-blue-600" /> Chrome Browser Integration
-                  </h4>
-                  <ol className="list-decimal list-inside text-xs text-zinc-650 space-y-2.5 leading-relaxed">
-                    <li>Copy your **Personal Access Token** generated above.</li>
-                    <li>Click the **Chrome Extension (.zip)** button above to download the package.</li>
-                    <li>Extract/Unzip the downloaded folder on your computer.</li>
-                    <li>Open Google Chrome and navigate to <code className="bg-zinc-150 px-1 rounded text-[10px]">chrome://extensions/</code>.</li>
-                    <li>Toggle on **Developer Mode** in the top-right corner.</li>
-                    <li>Click **Load Unpacked** in the top-left, and select the extracted **`browser-extension`** folder.</li>
-                    <li>Click the **FlowSense AI** icon in your Chrome extensions toolbar, paste your token and live Vercel URL, and click **Save**.</li>
-                  </ol>
+              {/* Chrome Setup Card */}
+              <div className="bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col">
+                <div className="bg-zinc-50 border-b border-zinc-100 p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-5 w-5 text-purple-600" />
+                    <span className="text-sm font-bold text-zinc-900">Chrome Browser Integration</span>
+                  </div>
+                  <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full select-none">BROWSER CLIENT</span>
+                </div>
+                <div className="p-5 flex-1 space-y-4">
+
+                  {/* Step 1 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-50 text-2xs font-bold text-purple-600 border border-purple-100">1</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Download Extension Package</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Click the blue button above to download the Chrome extension ZIP, and extract it on your machine.</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-50 text-2xs font-bold text-purple-600 border border-purple-100">2</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Load Unpacked in Chrome</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Open Chrome and go to <code className="bg-zinc-100 px-1 rounded font-mono text-[10px] text-zinc-800">chrome://extensions/</code>. Toggle on <strong className="text-zinc-800">Developer Mode</strong> (top-right), click <strong className="text-zinc-850">Load Unpacked</strong>, and select the extracted folder.</p>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-50 text-2xs font-bold text-purple-600 border border-purple-100">3</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Enter Credentials & URL Link</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Click the FlowSense puzzle logo in your browser extensions bar. Enter your Personal Access Token, paste the live URL box below, and click **Save Settings**:</p>
+                      <code className="block w-full mt-1.5 p-2 bg-zinc-900 text-zinc-100 rounded-lg text-2xs font-mono select-all">https://flow-sense-ai-self.vercel.app</code>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="flex gap-3.5 items-start">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-purple-50 text-2xs font-bold text-purple-600 border border-purple-100">4</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-950">Verify Telemetry Tracking</p>
+                      <p className="text-2xs text-zinc-500 mt-0.5">Visit Stack Overflow, MDN Web Docs, or nextjs.org. The extension will automatically log visits under your timeline tab!</p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
