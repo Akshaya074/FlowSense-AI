@@ -33,12 +33,20 @@ function isWhitelisted(urlStr) {
 
 // Ingest browser visit events to FlowSense AI REST API
 async function logTabVisit(url, title) {
-  chrome.storage.local.get(['flowsensePat'], async (result) => {
+  chrome.storage.local.get(['flowsensePat', 'flowsenseUrl'], async (result) => {
     const token = result.flowsensePat;
     if (!token) {
       console.log('[FlowSense Browser] Tracking disabled: No token configured.');
       return;
     }
+
+    // Default to localhost if no service URL is saved
+    let serviceUrl = result.flowsenseUrl || 'http://localhost:3000';
+    // Clean trailing slashes
+    serviceUrl = serviceUrl.replace(/\/+$/, '');
+    
+    // Construct event endpoint URL
+    const eventEndpoint = `${serviceUrl}/api/events`;
 
     try {
       const parsedUrl = new URL(url);
@@ -54,7 +62,8 @@ async function logTabVisit(url, title) {
         }
       };
 
-      const response = await fetch('http://localhost:3000/api/events', {
+      console.log(`[FlowSense Browser] Ingesting event to: ${eventEndpoint}`);
+      const response = await fetch(eventEndpoint, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
