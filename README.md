@@ -1,6 +1,6 @@
 # FlowSense AI 🚀
 
-Link = flow-sense-ai-self.vercel.app
+Live - https://flow-sense-ai-self.vercel.app/
 
 > **Intelligent Developer Activity Ingestion, Daily AI Focus Summaries, and Semantic Chat (RAG) System.**
 
