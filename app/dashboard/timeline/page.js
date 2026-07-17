@@ -289,7 +289,7 @@ export default function TimelinePage() {
                     {item.eventType && item.eventType.startsWith("FILE_") ? (
                       <FileCode className="h-4 w-4 text-blue-600" />
                     ) : (
-                      <Search className="h-4 w-4 text-purple-650" />
+                      <Globe className="h-4 w-4 text-purple-650" />
                     )}
                   </div>
 
@@ -307,8 +307,8 @@ export default function TimelinePage() {
                           {item.eventType || "EVENT"}
                         </span>
                         <CardTitle className="text-sm font-bold text-zinc-950 mt-2 break-all max-w-xl">
-                          {item.resourceName && item.resourceName.includes("/") 
-                            ? item.resourceName.split("/").pop() 
+                          {item.resourceName && (item.resourceName.includes("/") || item.resourceName.includes("\\"))
+                            ? item.resourceName.split(/[/\\]/).pop() 
                             : item.resourceName || "Unnamed Resource"}
                         </CardTitle>
                         {item.eventType === "DOC_VISIT" && item.resourceName && (
