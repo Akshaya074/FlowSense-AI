@@ -8,6 +8,7 @@ export default function AnalyticsPage() {
   const [pageState, setPageState] = useState("loading"); // loading, empty, error, success
   const [analytics, setAnalytics] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
+  const [isDev, setIsDev] = useState(false);
 
   // Fetch compiled statistics on load
   const fetchAnalytics = async () => {
@@ -37,6 +38,12 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     fetchAnalytics();
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        setIsDev(true);
+      }
+    }
   }, []);
 
   const handleStateToggle = (state) => {
@@ -64,7 +71,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* State Toggle bar */}
-        {process.env.NODE_ENV === "development" && (
+        {isDev && (
           <div className="flex items-center gap-2 bg-white p-1.5 rounded-lg border border-zinc-200 shadow-sm text-xs font-semibold self-start">
             <span className="text-zinc-500 px-2">Dev States:</span>
             <button

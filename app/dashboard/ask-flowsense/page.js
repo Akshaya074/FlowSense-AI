@@ -70,7 +70,17 @@ export default function AskFlowSensePage() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isDev, setIsDev] = useState(false);
   const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        setIsDev(true);
+      }
+    }
+  }, []);
 
   // Chat conversation logs list state
   const [messages, setMessages] = useState([
@@ -209,7 +219,7 @@ export default function AskFlowSensePage() {
         </div>
 
         {/* State Toggle bar */}
-        {process.env.NODE_ENV === "development" && (
+        {isDev && (
           <div className="flex items-center gap-2 bg-white p-1.5 rounded-lg border border-zinc-200 shadow-sm text-xs font-semibold self-start">
             <span className="text-zinc-500 px-2">Dev States:</span>
             <button
