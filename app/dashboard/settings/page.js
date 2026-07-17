@@ -115,6 +115,35 @@ export default function SettingsPage() {
 
           {/* Integration Guide */}
           <div className="border-t border-zinc-150 pt-6 space-y-6">
+            
+            {/* Download Buttons Row */}
+            <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h4 className="text-sm font-bold text-zinc-950 flex items-center gap-1.5">
+                  📥 Download Extension Clients
+                </h4>
+                <p className="text-xs text-zinc-500 mt-1.5">
+                  Get the companion extension builds directly to start logging your developer events.
+                </p>
+              </div>
+              <div className="flex gap-2 w-full sm:w-auto shrink-0">
+                <a 
+                  href="/downloads/flowsense-vscode-extension.zip" 
+                  download 
+                  className="inline-flex items-center justify-center rounded-lg bg-zinc-950 text-white font-bold text-xs px-4.5 py-2.5 hover:bg-zinc-800 transition-colors shadow-sm flex-1 sm:flex-none text-center cursor-pointer"
+                >
+                  VS Code Plugin (.zip)
+                </a>
+                <a 
+                  href="/downloads/flowsense-chrome-extension.zip" 
+                  download 
+                  className="inline-flex items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-xs px-4.5 py-2.5 hover:bg-blue-700 transition-colors shadow-sm flex-1 sm:flex-none text-center cursor-pointer"
+                >
+                  Chrome Extension (.zip)
+                </a>
+              </div>
+            </div>
+
             <h3 className="text-sm font-bold text-zinc-900">Setup Instructions</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
