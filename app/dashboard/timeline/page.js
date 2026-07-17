@@ -54,7 +54,7 @@ export default function TimelinePage() {
   const [isDev, setIsDev] = useState(false);
 
   // Fetch paginated events from PostgreSQL via Route Handler
-  const fetchTimelineEvents = async (pageNumber = 1, append = false) => {
+  const fetchTimelineEvents = async (pageNumber = 1, append = false, currentFilter = filter) => {
     if (pageNumber === 1) {
       setLoading(true);
     } else {
@@ -62,7 +62,7 @@ export default function TimelinePage() {
     }
     
     try {
-      const res = await fetch(`/api/dashboard/timeline?page=${pageNumber}&limit=5`);
+      const res = await fetch(`/api/dashboard/timeline?page=${pageNumber}&limit=5&type=${currentFilter}`);
       if (!res.ok) {
         throw new Error("Failed to fetch events");
       }
@@ -92,7 +92,7 @@ export default function TimelinePage() {
   };
 
   useEffect(() => {
-    fetchTimelineEvents();
+    fetchTimelineEvents(1, false, "all");
     if (typeof window !== "undefined") {
       const hostname = window.location.hostname;
       if (hostname === "localhost" || hostname === "127.0.0.1") {
@@ -101,9 +101,14 @@ export default function TimelinePage() {
     }
   }, []);
 
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    fetchTimelineEvents(1, false, newFilter);
+  };
+
   const handleStateToggle = (state) => {
     if (state === "api") {
-      fetchTimelineEvents(1, false);
+      fetchTimelineEvents(1, false, filter);
     } else {
       setLoading(true);
       setPageState(state);
@@ -115,7 +120,7 @@ export default function TimelinePage() {
 
   const handleLoadMore = () => {
     if (nextPage) {
-      fetchTimelineEvents(nextPage, true);
+      fetchTimelineEvents(nextPage, true, filter);
     }
   };
 
@@ -218,19 +223,19 @@ export default function TimelinePage() {
       {(pageState === "api" || pageState === "success") && !loading && (
         <div className="flex items-center gap-2 border-b border-zinc-200 pb-2 text-sm font-semibold">
           <button
-            onClick={() => setFilter("all")}
+            onClick={() => handleFilterChange("all")}
             className={`pb-2 px-1 border-b-2 transition-all cursor-pointer ${filter === "all" ? "border-blue-600 text-blue-650" : "border-transparent text-zinc-500 hover:text-zinc-950"}`}
           >
             All Events
           </button>
           <button
-            onClick={() => setFilter("code")}
+            onClick={() => handleFilterChange("code")}
             className={`pb-2 px-1 border-b-2 transition-all cursor-pointer ${filter === "code" ? "border-blue-600 text-blue-650" : "border-transparent text-zinc-500 hover:text-zinc-950"}`}
           >
             IDE Logs
           </button>
           <button
-            onClick={() => setFilter("docs")}
+            onClick={() => handleFilterChange("docs")}
             className={`pb-2 px-1 border-b-2 transition-all cursor-pointer ${filter === "docs" ? "border-blue-600 text-blue-650" : "border-transparent text-zinc-500 hover:text-zinc-950"}`}
           >
             Doc Site Visits

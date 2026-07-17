@@ -30,15 +30,24 @@ export async function GET(req) {
       }
     }
 
-    // 3. Parse pagination search parameters
+    // 3. Parse pagination search parameters and filter query
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "10", 10);
+    const limit = parseInt(searchParams.get("limit") || "5", 10); // Standardize on limit 5 matching client requests
     const skip = (page - 1) * limit;
+    const type = searchParams.get("type") || "all";
 
-    // 4. Fetch telemetry events (take limit + 1 to check if there is another page)
+    // Build Prisma query condition based on category filter selection
+    const queryCondition = { userId: dbUser.id };
+    if (type === "code") {
+      queryCondition.eventType = { in: ["FILE_OPEN", "FILE_SAVE"] };
+    } else if (type === "docs") {
+      queryCondition.eventType = "DOC_VISIT";
+    }
+
+    // 4. Fetch telemetry events matching condition (take limit + 1 to check if there is another page)
     const events = await db.telemetryEvent.findMany({
-      where: { userId: dbUser.id },
+      where: queryCondition,
       orderBy: { timestamp: "desc" },
       skip: skip,
       take: limit + 1,
