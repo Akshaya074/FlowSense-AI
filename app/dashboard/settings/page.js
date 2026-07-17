@@ -127,11 +127,11 @@ export default function SettingsPage() {
                   </h4>
                   <ol className="list-decimal list-inside text-xs text-zinc-650 space-y-2.5 leading-relaxed">
                     <li>Copy your **Personal Access Token** generated above.</li>
-                    <li>To deploy locally, copy the **`vscode-extension`** folder from the codebase into your computer's extensions folder (usually at `~/.vscode/extensions/`).</li>
-                    <li>Or open the **`vscode-extension`** folder in VS Code and press <kbd className="bg-white border px-1 rounded text-[10px]">F5</kbd> to launch in Development Host mode.</li>
-                    <li>Open Settings (`Ctrl+,` or `Cmd+,`), search for **`FlowSense AI: Service URL`**, and set it to your server endpoint (e.g. `http://localhost:3000` or your Vercel domain).</li>
-                    <li>Open the Command Palette (<kbd className="bg-white border px-1 rounded text-[10px]">Ctrl+Shift+P</kbd> or <kbd className="bg-white border px-1 rounded text-[10px]">Cmd+Shift+P</kbd>).</li>
-                    <li>Type **`FlowSense AI: Set Personal Access Token`**, press Enter, and paste your token.</li>
+                    <li>Clone the public repo to get the extensions: <code className="bg-zinc-150 px-1 rounded text-[10px]">git clone https://github.com/Akshaya074/FlowSense-AI.git</code>.</li>
+                    <li>Copy the **`vscode-extension`** folder from the repo into your VS Code extensions folder (on Windows: <code className="bg-zinc-150 px-1 rounded text-[10px]">%USERPROFILE%\.vscode\extensions</code>).</li>
+                    <li>Or, open the **`vscode-extension`** folder in VS Code, run <code className="bg-zinc-150 px-1 rounded text-[10px]">npm install</code>, and press <kbd className="bg-white border px-1 rounded text-[10px]">F5</kbd> to launch.</li>
+                    <li>Open VS Code Settings (`Ctrl+,`), search for **`FlowSense AI: Service URL`**, and set it to your deployed domain (e.g. `https://flow-sense-ai-self.vercel.app`).</li>
+                    <li>Open the Command Palette (<kbd className="bg-white border px-1 rounded text-[10px]">Ctrl+Shift+P</kbd>). Select **`FlowSense AI: Set Personal Access Token`** and paste your token.</li>
                   </ol>
                 </div>
               </div>
@@ -144,11 +144,11 @@ export default function SettingsPage() {
                   </h4>
                   <ol className="list-decimal list-inside text-xs text-zinc-650 space-y-2.5 leading-relaxed">
                     <li>Copy your **Personal Access Token** generated above.</li>
+                    <li>Clone the public repo: <code className="bg-zinc-150 px-1 rounded text-[10px]">git clone https://github.com/Akshaya074/FlowSense-AI.git</code>.</li>
                     <li>Open Chrome and navigate to <code className="bg-zinc-150 px-1 rounded text-[10px]">chrome://extensions/</code>.</li>
                     <li>Toggle on **Developer Mode** in the top-right corner.</li>
-                    <li>Click **Load Unpacked** in the top-left, and select the **`browser-extension`** folder inside your FlowSense AI codebase directory.</li>
-                    <li>Click the **FlowSense AI** icon in your Chrome extensions bar toolbar.</li>
-                    <li>Paste your token and target server URL (e.g. `http://localhost:3000` or your Vercel URL), then click **Save**.</li>
+                    <li>Click **Load Unpacked** (top-left) and select the **`browser-extension`** folder inside the cloned codebase directory.</li>
+                    <li>Click the **FlowSense AI** icon in your Chrome extensions bar toolbar, paste your token and live Vercel URL, and click **Save**.</li>
                   </ol>
                 </div>
               </div>

@@ -26,14 +26,14 @@ export default function DashboardSidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col border-r border-zinc-200 bg-white">
       {/* Brand Logo */}
-      <div className="flex h-16 items-center gap-2 px-6 border-b border-zinc-150">
+      <Link href="/" className="flex h-16 items-center gap-2 px-6 border-b border-zinc-150 hover:opacity-90 transition-opacity">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-sm shadow-sm">
           FS
         </div>
         <span className="text-lg font-bold tracking-tight text-zinc-950">
           FlowSense <span className="text-blue-600">AI</span>
         </span>
-      </div>
+      </Link>
 
       {/* Nav List */}
       <nav className="flex-1 space-y-1 px-4 py-6">
