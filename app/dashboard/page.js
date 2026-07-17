@@ -93,6 +93,7 @@ export default function DashboardOverviewPage() {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [summaryError, setSummaryError] = useState("");
+  const [isDev, setIsDev] = useState(false);
 
   // Fetch metrics and statistics from PostgreSQL API
   const fetchDashboardStats = async () => {
@@ -121,6 +122,12 @@ export default function DashboardOverviewPage() {
 
   useEffect(() => {
     fetchDashboardStats();
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        setIsDev(true);
+      }
+    }
   }, []);
 
   const handleStateToggle = (state) => {
@@ -242,39 +249,41 @@ export default function DashboardOverviewPage() {
           <p className="text-zinc-500">Track and recover your developer flow metrics.</p>
         </div>
         {/* State Toggle Switcher for Recruiters */}
-        <div className="flex flex-wrap items-center gap-2 bg-white p-1.5 rounded-lg border border-zinc-200 shadow-sm text-xs font-semibold self-start">
-          <span className="text-zinc-500 px-2">Dev States:</span>
-          <button
-            onClick={() => handleStateToggle("api")}
-            className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "api" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
-          >
-            Live DB
-          </button>
-          <button
-            onClick={() => handleStateToggle("success")}
-            className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "success" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
-          >
-            Mock Success
-          </button>
-          <button
-            onClick={() => handleStateToggle("loading")}
-            className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "loading" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
-          >
-            Loading
-          </button>
-          <button
-            onClick={() => handleStateToggle("empty")}
-            className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "empty" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
-          >
-            Empty
-          </button>
-          <button
-            onClick={() => handleStateToggle("error")}
-            className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "error" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
-          >
-            Error
-          </button>
-        </div>
+        {isDev && (
+          <div className="flex flex-wrap items-center gap-2 bg-white p-1.5 rounded-lg border border-zinc-200 shadow-sm text-xs font-semibold self-start">
+            <span className="text-zinc-500 px-2">Dev States:</span>
+            <button
+              onClick={() => handleStateToggle("api")}
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "api" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
+            >
+              Live DB
+            </button>
+            <button
+              onClick={() => handleStateToggle("success")}
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "success" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
+            >
+              Mock Success
+            </button>
+            <button
+              onClick={() => handleStateToggle("loading")}
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "loading" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
+            >
+              Loading
+            </button>
+            <button
+              onClick={() => handleStateToggle("empty")}
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "empty" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
+            >
+              Empty
+            </button>
+            <button
+              onClick={() => handleStateToggle("error")}
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${pageState === "error" ? "bg-blue-600 text-white" : "text-zinc-650 hover:bg-zinc-100"}`}
+            >
+              Error
+            </button>
+          </div>
+        )}
       </div>
 
       {/* RENDER DYNAMIC STATE LAYOUTS */}
