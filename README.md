@@ -119,4 +119,4 @@ Open [http://localhost:3000](http://localhost:3000) to view the application dash
 1. Open Chrome and navigate to `chrome://extensions/`.
 2. Toggle on **Developer Mode** (top-right).
 3. Click **Load Unpacked** and select the `browser-extension/` directory.
-4. Click the extension toolbar icon, paste your Personal Access Token, and save!
+4. Click the FlowSense extension icon in your toolbar, paste your token, set the Server URL, and click **Save**.
